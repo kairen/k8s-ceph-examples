@@ -1,0 +1,4 @@
+export KUBECONFIG=/etc/kubernetes/admin.conf
+export HELM_HOST=$(kubectl describe svc/tiller-deploy -n kube-system | awk '/Endpoints/{print $2}')
+export osd_cluster_network=172.20.3.0/24
+export osd_public_network=172.20.3.0/24

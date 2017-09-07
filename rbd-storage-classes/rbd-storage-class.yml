@@ -1,0 +1,13 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+   name: hdd
+provisioner: kubernetes.io/rbd
+parameters:
+    monitors: 172.20.3.92:6789,172.20.3.93:6789,172.20.3.95:6789
+    adminId: admin
+    adminSecretName: admin-key
+    adminSecretNamespace: kube-system
+    pool: kube
+    userId: kube
+    userSecretName: kube-key

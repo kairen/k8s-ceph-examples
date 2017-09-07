@@ -1,0 +1,25 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: filemanager
+spec:
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: filemanager
+    spec:
+      containers:
+      - name: filemanager
+        image: hacdias/filemanager:latest
+        ports:
+        - name: http
+          containerPort: 80
+        volumeMounts:
+        - name: storage
+          mountPath: "/srv"
+      volumes:
+      - name: storage
+        persistentVolumeClaim:
+          claimName: rbd-pvc

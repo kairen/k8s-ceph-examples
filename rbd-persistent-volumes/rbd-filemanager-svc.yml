@@ -1,0 +1,28 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: filemanager-service
+  labels:
+    app: filemanager
+spec:
+  clusterIP: None
+  ports:
+    - name: http
+      port: 80
+  selector:
+    app: filemanager
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: filemanager-ingress
+spec:
+  rules:
+  - host: file.zone1.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: filemanager-service
+          servicePort: http

@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.7.9
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: html-root
+          mountPath: /usr/share/nginx/html
+      volumes:
+        - name: html-root
+          cephfs:
+            monitors:
+            - ceph-mon.ceph:6789
+            path: /nginx
+            user: admin
+            secretRef:
+              name: ceph-client-secret
